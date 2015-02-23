@@ -79,8 +79,8 @@ class wget:
 				sys.stdout.write('\nDownload Finished!\nTotal Time: %ss, Download Speed: %sk/s\n' % (spend, speed))
 				sys.stdout.flush()
 			except:
-				import traceback
-				print traceback.print_exc()
+				# import traceback
+				# print traceback.print_exc()
 				print "\nDownload pause.\n"
 			finally:
 				if not finished:
