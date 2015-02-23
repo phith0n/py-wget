@@ -75,7 +75,7 @@ class wget:
 				finished = True
 				os.remove(tmp_filename)
 				spend = int(time.time() - start_t)
-				speed = int(size / 1024 / spend)
+				speed = int((size - self.size) / 1024 / spend)
 				sys.stdout.write('\nDownload Finished!\nTotal Time: %ss, Download Speed: %sk/s\n' % (spend, speed))
 				sys.stdout.flush()
 			except:
