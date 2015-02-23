@@ -87,37 +87,28 @@ class wget:
 					with open(tmp_filename, 'wb') as ftmp:
 						ftmp.write(str(size))
 
-parser = OptionParser()
-parser.add_option("-u", "--url", dest="url",  
-                  help="target url")
-parser.add_option("-o", "--output", dest="filename",  
-                  help="download file to save")
-parser.add_option("-a", "--user-agent", dest="useragent", 
-				  help="request user agent", default='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 \
-		(KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36')
-parser.add_option("-r", "--referer", dest="referer", 
-				  help="request referer")
-parser.add_option("-c", "--cookie", dest="cookie", 
-				  help="request cookie", default = 'foo=1;')
-(options, args) = parser.parse_args()
-if not options.url:
-	print 'Missing url'
-	sys.exit()
-if not options.filename:
-	options.filename = options.url.split('/')[-1]
-headers = {
-	'User-Agent': options.useragent,
-	'Referer': options.referer if options.referer else options.url,
-	'Cookie': options.cookie
-}
-wget().download(options.url, options.filename)
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+	parser = OptionParser()
+	parser.add_option("-u", "--url", dest="url",  
+	                  help="target url")
+	parser.add_option("-o", "--output", dest="filename",  
+	                  help="download file to save")
+	parser.add_option("-a", "--user-agent", dest="useragent", 
+					  help="request user agent", default='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 \
+			(KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36')
+	parser.add_option("-r", "--referer", dest="referer", 
+					  help="request referer")
+	parser.add_option("-c", "--cookie", dest="cookie", 
+					  help="request cookie", default = 'foo=1;')
+	(options, args) = parser.parse_args()
+	if not options.url:
+		print 'Missing url'
+		sys.exit()
+	if not options.filename:
+		options.filename = options.url.split('/')[-1]
+	headers = {
+		'User-Agent': options.useragent,
+		'Referer': options.referer if options.referer else options.url,
+		'Cookie': options.cookie
+	}
+	wget().download(options.url, options.filename)
