@@ -43,10 +43,13 @@ class wget:
 		block = self.config['block']
 		local_filename = self.remove_nonchars(filename)
 		tmp_filename = local_filename + '.downtmp'
+		size = self.size
+		total = self.total
 		if self.support_continue(url):  # 支持断点续传
 			try:
 				with open(tmp_filename, 'rb') as fin:
-					self.size = int(fin.read()) + 1
+					self.size = int(fin.read())
+					size = self.size + 1
 			except:
 				self.touch(tmp_filename)
 			finally:
@@ -55,15 +58,15 @@ class wget:
 			self.touch(tmp_filename)
 			self.touch(local_filename)
 
-		size = self.size
-		total = self.total
 		r = requests.get(url, stream = True, verify = False, headers = headers)
 		if total > 0:
 			print "[+] Size: %dKB" % (total / 1024)
 		else:
 			print "[+] Size: None"
 		start_t = time.time()
-		with open(local_filename, 'ab') as f:
+		with open(local_filename, 'ab+') as f:
+			f.seek(self.size)
+			f.truncate()
 			try:
 				for chunk in r.iter_content(chunk_size = block): 
 					if chunk:
